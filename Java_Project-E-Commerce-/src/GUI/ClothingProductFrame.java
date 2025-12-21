@@ -8,6 +8,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
+import MainAndSys.ECommerceSys;
 import ecommerce.*;
 
 public class ClothingProductFrame extends JFrame {

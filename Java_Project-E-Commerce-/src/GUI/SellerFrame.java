@@ -10,6 +10,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
+
+import MainAndSys.ECommerceSys;
+
 import javax.swing.DefaultComboBoxModel; 
 import ecommerce.*;
 

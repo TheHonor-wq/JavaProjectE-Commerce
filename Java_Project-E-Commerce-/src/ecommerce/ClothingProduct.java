@@ -15,7 +15,7 @@ public class ClothingProduct extends Product{
 		this.material = material;
 		this.season = season;
 		this.color = color;
-		this.shippingWeight=150; //each type of clothing is 100 gram
+		this.shippingWeight=150; //each type of clothing is 150 gram
 
 	}
 

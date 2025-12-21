@@ -7,8 +7,12 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
+import MainAndSys.ECommerceSys;
+
 import javax.swing.DefaultComboBoxModel;
 import ecommerce.*;
 
@@ -43,7 +47,13 @@ public class RegisterFrame extends JFrame {
         lblPass.setBounds(30, 70, 80, 14);
         contentPane.add(lblPass);
 
-        passF = new JTextField();
+       passF = new JPasswordField();
+        ((JPasswordField) passF).setEchoChar('●');
+
+        passF.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        	}
+        });
         passF.setBounds(110, 67, 150, 20);
         contentPane.add(passF);
 
@@ -105,7 +115,7 @@ public class RegisterFrame extends JFrame {
 
     private void registerUser() {
         String u = userF.getText();
-        String p = passF.getText();
+        String p = new String(((JPasswordField) passF).getPassword());
         String type = (String) combo.getSelectedItem();
         
         User newUser = null;

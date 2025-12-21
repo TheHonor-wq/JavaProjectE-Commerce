@@ -1,0 +1,8 @@
+﻿Seller;TechWhiz;pass123;
+Seller;StyleHub;fashion456;
+Customer;alice_smith;secret789;123 Maple St, New York 
+Customer;bob_jones;hello000;456 Oak Ave, California
+Customer;onurc123;onurc123;Ankara
+Seller;onurs123;onurs123;Istanbul
+Seller;Apple;apple123;
+Seller;Eker;eker123;

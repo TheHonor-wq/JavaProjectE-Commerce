@@ -52,9 +52,13 @@ public class User {
 	
 	
 	
+	
+
+
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		return Objects.hash(username);
 	}
 
 
@@ -68,7 +72,7 @@ public class User {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		return id == other.id;
+		return Objects.equals(username, other.username);
 	}
 
 
