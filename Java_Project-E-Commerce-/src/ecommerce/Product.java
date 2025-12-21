@@ -1,55 +1,32 @@
 package ecommerce;
 
-import java.util.Scanner;
+import java.util.Objects;
 
-public abstract class Product implements ProductInterface{
-	int id;
-	String name;
-	double price;
-	int stock;
-	String producer;
-	double stars;
-	double shippingWeight;
+public abstract class Product implements ProductInterface, Comparable<Product>{
+	protected int id;//visibility ??
+	protected String name;
+	protected double price;
+	protected int stock;
+	protected String producer;
+	protected double stars;
+	protected double shippingWeight;
+	protected int seller_id;
 
 	
+	static private int product_count = 0;
 	
-	
-	public Product(int id, String name, double price, int stock, String producer, double stars) {
-		super();
-		this.id = id;
+	public Product(int seller_id, String name, double price, int stock, String producer, double stars) {
+		super();//why not implicit
+		this.id = product_count;
+		this.seller_id = seller_id;
 		this.name = name;
 		this.price = price;
 		this.stock = stock;
 		this.producer = producer;
 		this.stars = stars;
+		product_count++;
 	}
 
-
-	public void getInput()
-	{
-		Scanner sc = new Scanner(System.in);
-		
-		System.out.print("Enter product id: ");
-		id = sc.nextInt();
-		sc.nextLine();
-		
-		System.out.print("Enter product name: ");
-		name = sc.nextLine();
-		
-		
-		System.out.print("Enter product price: ");
-		price = sc.nextDouble();
-		sc.nextLine();
-		
-		System.out.print("Enter stock for the product: ");
-		stock = sc.nextInt();
-		sc.nextLine();
-		
-		System.out.print("Enter producer: ");
-		producer = sc.nextLine();
-		
-	}
-	
 	
 	public int getId() {
 		return id;
@@ -113,15 +90,42 @@ public abstract class Product implements ProductInterface{
 	}
 	@Override
 	public double calculateTax() {
-		return 0;
+		return 0;//?
 	}
+
+	
+	
+	
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Product other = (Product) obj;
+		return id == other.id;
+	}
+
 
 	@Override
 	public String toString() {
 		return "\nProduct \nid=" + id + "\n name=" + name + "\nprice=" + price + "\nstock=" + stock + "\nproducer="
 				+ producer + "\nstars=" + stars;
 	}
-	
+	@Override
+    public int compareTo(Product other) {
+        // List according to IDs
+        return Integer.compare(this.id, other.id);
+    }
 	
 
 }

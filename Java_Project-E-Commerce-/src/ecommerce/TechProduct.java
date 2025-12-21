@@ -10,16 +10,7 @@ public class TechProduct extends Product{
 	//television 20000g
 	//console is 3000g 
 	
-
-
 	
-
-
-
-
-
-
-
 
 	@Override
 	public double calculateTax() { //tax is 40% for the tech products
@@ -27,15 +18,9 @@ public class TechProduct extends Product{
 	}
 
 
-
-
-
-
-
-
-	public TechProduct(int id, String name, double price, int stock, String producer, double stars, String type,
+	public TechProduct(int seller_id,String name, double price, int stock, String producer, double stars, String type,
 			int yearOfProduction, boolean guarentee) {
-		super(id, name, price, stock, producer, stars);
+		super(seller_id,name, price, stock, producer, stars);
 		this.type = type;
 		this.yearOfProduction = yearOfProduction;
 		this.guarentee = guarentee;
@@ -126,7 +111,7 @@ public class TechProduct extends Product{
 	@Override
 	public String toString() {
 
-	String output = "\nTechProduct \nid" + "\nname=" + name + "\nprice=" + price + "\nstock=" + stock + "\nproducer=" + producer
+	String output = "\nTechProduct \nid=" + this.id +  "\nname=" + name + "\nprice=" + price + "\nstock=" + stock + "\nproducer=" + producer
 			+ "\nstars=" + stars + "\nshippingWeight=" + shippingWeight
 			+"\ntype=" + type + "\nyearOfProduction=" + yearOfProduction+"\nguarentee="+guarentee;
 		return output;

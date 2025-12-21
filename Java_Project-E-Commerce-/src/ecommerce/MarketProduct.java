@@ -7,9 +7,9 @@ public class MarketProduct extends Product{
 
 	
 	
-	public MarketProduct(int id, String name, double price, int stock, String producer, double stars, String type,
+	public MarketProduct( int seller_id,String name, double price, int stock, String producer, double stars, String type,
 			String expireDate) {
-		super(id, name, price, stock, producer, stars);
+		super(seller_id,name, price, stock, producer, stars);
 		this.type = type;
 		this.expireDate = expireDate;
 		String normalized =type.toLowerCase();
@@ -60,7 +60,7 @@ public class MarketProduct extends Product{
 	@Override
 	public String toString() {
 		return "\nMarketProduct \nid="+id + "\nname=" + name
-				+ "\nprice=" + price + stock + "\nproducer=" + producer + "\nstars=" + stars
+				+ "\nprice=" + price + "\nstock="+stock + "\nproducer=" + producer + "\nstars=" + stars
 				+ "\nshippingWeight=" + shippingWeight+"\ntype=" + type + "\nexpireDate=" + expireDate;
 	}
 	

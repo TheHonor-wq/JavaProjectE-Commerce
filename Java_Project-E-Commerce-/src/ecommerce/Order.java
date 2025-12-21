@@ -1,31 +1,31 @@
 package ecommerce;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
-public class Order {
-	private int id;
+public class Order implements Comparable<Order>{
+	private int id;//protected
+	private int customer_id;
 	private ArrayList<OrderItem> items = new ArrayList<>();
-	private Customer customer;
 	private double totalShippingFee;
 	
 	
-	public Order(int id,Customer customer,ArrayList<OrderItem> items) {
+	static private int order_count = 0;
+	
+	public Order(int customer_id) {
 		super();
-		this.id = id;
-		this.items = items;
-		this.customer = customer;
-		if(customer!=null)
-		{
-			customer.addOrder(this); 
-		}
-		
+		this.id = order_count;
+		this.customer_id = customer_id;		
+		order_count++;
 	}
 
 
 	public int getId() {
 		return id;
 	}
-
+	public int getCustomerId() {
+		return customer_id;
+	}
 
 	public void setId(int id) {
 		this.id = id;
@@ -40,15 +40,14 @@ public class Order {
 	public void setItems(ArrayList<OrderItem> items) {
 		this.items = items;
 	}
-
-
-	public Customer getCustomer() {
-		return customer;
+	public boolean addItem(OrderItem orderItem) {
+		return items.add(orderItem);
 	}
+	
 
 
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
+	public void setCustomer(int customer_id) {
+		this.customer_id = customer_id;
 	}
 
 
@@ -65,7 +64,7 @@ public class Order {
 	public double calculateTotalShippingFee() //calculates the total weight and determines the shippingFee accordingly.
 	{
 		double totalWeight=0;
-		for(int i=0;i<items.size();i++)
+		for(int i=0;i<items.size();i++)//(item : items)
 		{
 			totalWeight+=items.get(i).getLineItemWeight();
 		}
@@ -100,12 +99,36 @@ public class Order {
 	}
 
 
+	
+	
+	
+	
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Order other = (Order) obj;
+		return id == other.id;
+	}
+
+
 	@Override
 	public String toString() {
 		String output="\nOrder:";
 		for(OrderItem item:this.items) //for each loop for iterating through this ArrayList.
 		{
-			output+=items.toString();
+			output+=item.toString();
 		}
 		output+="\n\nTotal Shipping Fee: ";
 		output+=calculateTotalShippingFee();
@@ -117,7 +140,11 @@ public class Order {
 	}
 	
 	
-	
+	@Override
+    public int compareTo(Order other) {
+        // According to ids
+        return Integer.compare(this.id, other.id);
+    }
 
 }
 
