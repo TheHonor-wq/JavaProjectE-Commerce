@@ -1,6 +1,6 @@
 ﻿Tech;6;iPhone 15;35000.0;50;Apple;4.9;Phone;2023;true
 Tech;6;MacBook Pro;65000.0;20;Apple;4.8;Laptop;2024;true
 Market;7;Eker Milk 1L;45.0;100;Eker;4.7;Beverage;2024-12-31
-Market;7;Yogurt 2kg;85.0;60;Eker;4.9;Food;2024-11-15
+Market;7;Yogurt;85.0;60;Eker;4.9;Food;2024-11-15
 Clothing;1;Cotton T-Shirt;250.0;100;StyleHub;4.2;Shirt;Unisex;Cotton;Summer;Blue
 Tech;0;Gaming Console;18000.0;15;TechWhiz;4.5;Console;2023;true

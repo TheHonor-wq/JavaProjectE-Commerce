@@ -6,3 +6,7 @@ Customer;onurc123;onurc123;Ankara
 Seller;onurs123;onurs123;Istanbul
 Seller;Apple;apple123;
 Seller;Eker;eker123;
+Customer;abdc123;abdc123;Ankara;
+Seller;abds123;abds123;Dubai;
+Customer;omerc123;omerc123;Nigeria;
+Seller;omers123;omers123;Bangladesh;

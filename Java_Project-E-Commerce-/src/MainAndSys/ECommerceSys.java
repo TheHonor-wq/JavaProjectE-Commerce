@@ -13,8 +13,8 @@ public class ECommerceSys {
 	public static TreeSet<Product> products = new TreeSet<>();
 	public static TreeSet<Order> orders = new TreeSet<>();
 	
-	public static final String USER_FILE = "user.txt";
-	public static final String PRODUCT_FILE = "product.txt";
+	public static final String USER_FILE = "src/user.txt";
+	public static final String PRODUCT_FILE = "src/product.txt";
 	
 	
 	public static boolean searchUserID(int id) {//if exist return true

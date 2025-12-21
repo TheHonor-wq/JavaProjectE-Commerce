@@ -25,7 +25,6 @@ public class CustomerFrame extends JFrame {
     private JTextField quantity;
     private Customer currentCustomer;
     
-    // Implementation: Local cart to hold items before buying
     private ArrayList<OrderItem> cart = new ArrayList<>();
 
     public CustomerFrame(Customer customer) {
@@ -33,7 +32,7 @@ public class CustomerFrame extends JFrame {
         
         setTitle("Customer Panel - " + customer.getUsername());
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 500, 550); // Increased height slightly for new buttons
+        setBounds(100, 100, 500, 550); 
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -77,7 +76,7 @@ public class CustomerFrame extends JFrame {
         contentPane.add(quantity);
         quantity.setColumns(10);
         
-        // Implementation: ADD TO CART Button
+        
         JButton btnAddCart = new JButton("ADD TO CART");
         btnAddCart.setBounds(155, 316, 120, 23);
         btnAddCart.addActionListener(new ActionListener() {
@@ -86,12 +85,41 @@ public class CustomerFrame extends JFrame {
                 String qtyStr = quantity.getText();
                 
                 if (selectedIDStr != null && !qtyStr.isEmpty()) {
-                    int pid = Integer.parseInt(selectedIDStr);
-                    int qty = Integer.parseInt(qtyStr);
-                    
-                    // Add items to the local cart list
-                    cart.add(new OrderItem(pid, qty));
-                    disp.setText("Product " + pid + " (Qty: " + qty + ") added to cart!\nItems in cart: " + cart.size());
+                    try {
+                        int pid = Integer.parseInt(selectedIDStr);
+                        int requestedQty = Integer.parseInt(qtyStr);
+                        
+                       
+                        if (requestedQty <= 0) {
+                            disp.setText("WARNING: Quantity must be greater than 0!");
+                            return;
+                        }
+
+                        Product found = ECommerceSys.searchProductById(pid);
+                        if (found != null) {
+                            int availableStock = found.getStock();
+
+                         
+                            int finalQty = requestedQty;
+                            if (requestedQty > availableStock) {
+                                finalQty = availableStock;
+                                disp.setText("Note: Only " + availableStock + " items available. Adding full stock to cart.");
+                            } else {
+                                disp.setText("Product " + pid + " (Qty: " + finalQty + ") added to cart!");
+                            }
+
+                           
+                            if (finalQty == 0) {
+                                disp.setText("WARNING: This product is currently out of stock!");
+                                return;
+                            }
+
+                            cart.add(new OrderItem(pid, finalQty));
+                            disp.append("\nItems in cart: " + cart.size());
+                        }
+                    } catch (NumberFormatException ex) {
+                        disp.setText("ERROR: Please enter a valid numeric quantity.");
+                    }
                 }
             }
         });
@@ -107,18 +135,18 @@ public class CustomerFrame extends JFrame {
                     return;
                 }
 
-                // Create a single Order for the whole cart
+                
                 Order newOrder = new Order(currentCustomer.getId());
 
-                // Process each item: update stock and add to the finalized order
+               
                 for (OrderItem item : cart) {
                     ECommerceSys.addToOrder(item, newOrder);
                 }
 
-                // Add order to system history
+               
                 ECommerceSys.orders.add(newOrder);
                 
-                // Clear cart and show receipt
+               
                 disp.setText("Order Success!\n" + newOrder.toString());
                 cart.clear(); 
             }
@@ -144,6 +172,15 @@ public class CustomerFrame extends JFrame {
             }
         });
         contentPane.add(closeButton);
+        
+        JButton allProductsBtn = new JButton("Display All Products");
+        allProductsBtn.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		disp.setText(ECommerceSys.displayAllProducts());
+        	}
+        });
+        allProductsBtn.setBounds(267, 9, 171, 29);
+        contentPane.add(allProductsBtn);
 
         if (combo.getItemCount() > 0) {
             combo.setSelectedIndex(0);
@@ -151,7 +188,6 @@ public class CustomerFrame extends JFrame {
         }
     }
 
-    // Displays the selected product details
     private void displaySelectedProduct() {
         String selectedIDStr = (String) combo.getSelectedItem();
         if(selectedIDStr != null) {
@@ -159,15 +195,12 @@ public class CustomerFrame extends JFrame {
             Product found = ECommerceSys.searchProductById(id);
             if(found != null) {
                 String info = found.toString();
-                info += "\n\n--- Financials ---";
-                info += "\nTax Rate: " + (found.calculateTax() * 100) + "%";
                 info += "\nShipping Weight: " + found.getShippingWeight() + "g";
                 disp.setText(info);
             }
         }
     }
 
-    // Implementation: Formats and displays all orders belonging to this customer
     private void displayCustomerOrders() {
         StringBuilder sb = new StringBuilder("--- Your Order History ---\n");
         boolean hasOrders = false;

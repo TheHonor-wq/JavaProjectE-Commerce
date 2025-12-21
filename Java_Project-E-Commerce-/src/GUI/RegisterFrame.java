@@ -24,6 +24,7 @@ public class RegisterFrame extends JFrame {
     private JTextField addressF;
     private JComboBox<String> combo;
     private JLabel AddressF; 
+    private JLabel warningLabel;
 
     public RegisterFrame() {
         setTitle("Register New User");
@@ -83,11 +84,20 @@ public class RegisterFrame extends JFrame {
         
         
         toggleAddressVisibility();
-
+        JLabel warningLabel = new JLabel("");
+        warningLabel.setBounds(29, 172, 231, 16);
+        contentPane.add(warningLabel);
+        
         JButton btnRegister = new JButton("Register");
         btnRegister.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                registerUser();
+               if( !registerUser()) {
+            	  warningLabel.setText("This user already exists!!"); 
+               }
+               else
+               {
+            	   warningLabel.setText("");
+               }
             }
         });
         btnRegister.setBounds(40, 200, 100, 30);
@@ -103,6 +113,8 @@ public class RegisterFrame extends JFrame {
         });
         btnLogin.setBounds(160, 200, 120, 30);
         contentPane.add(btnLogin);
+        
+        
     }
 
     private void toggleAddressVisibility() {
@@ -113,7 +125,7 @@ public class RegisterFrame extends JFrame {
         addressF.setVisible(isCustomer);
     }
 
-    private void registerUser() {
+    private boolean registerUser() {
         String u = userF.getText();
         String p = new String(((JPasswordField) passF).getPassword());
         String type = (String) combo.getSelectedItem();
@@ -131,6 +143,11 @@ public class RegisterFrame extends JFrame {
             LoginFrame login = new LoginFrame();
             login.setVisible(true);
             dispose();
+            return true;
+        }
+        else
+        {
+        	return false;
         }
     }
 }
